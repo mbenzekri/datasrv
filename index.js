@@ -10,6 +10,7 @@ request = require('request');
 
 var workercount = 2*require('os').cpus().length;
 const port = process.env.port || config.port || 4000
+console.log(`================> PORT IS : ${port}`)
 if (cluster.isMaster) {
 
     console.log("--------------------------------------------------------------------------------");
