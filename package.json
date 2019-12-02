@@ -4,7 +4,6 @@
   "description": "serveur de fichier statique geojson",
   "main": "index.js",
   "dependencies": {
-    "azure": "^2.3.1-preview",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.17.1"
