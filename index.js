@@ -9,7 +9,7 @@ var compression = require('compression')
 request = require('request');
 
 var workercount = 2*require('os').cpus().length;
-const port = process.env.PORT || config.port || 4000
+const port = process.env.port || config.port || 4000
 if (cluster.isMaster) {
 
     console.log("--------------------------------------------------------------------------------");
