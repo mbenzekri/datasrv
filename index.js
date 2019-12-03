@@ -39,10 +39,10 @@ app.use(compression({
 
 app.use(logger)
 let state = 'no error thrown !'
-app.use('/geo', check)
+app.use('/data/geo', check)
 // try {
 let request = require('request');
-app.use('/geo', function (req, res) {
+app.use('/data/geo', function (req, res) {
     const bloburl = `${config.geocont}${req.path}${config.sastoken}`
 
     console.log(`${(new Date()).toISOString()}: Proxying ${req.url} to ${bloburl}`);
