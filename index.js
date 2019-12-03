@@ -45,6 +45,7 @@ try {
         const bloburl = `${config.geocont}${req.path}${config.sastoken}`
 
         console.log(`${(new Date()).toISOString()}: Proxying ${req.url} to ${bloburl}`);
+        res.status(200)
         req.pipe(request(bloburl)).pipe(res);
     })
 } catch (e) {
