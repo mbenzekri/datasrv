@@ -6,7 +6,7 @@ const iv = 'NBHxqEFMWRaEOQ8CZvyWGWUvnsWDciy4'.toString('hex').slice(0, 16);
 const prefix = 'STARTSAMIGEODATA';
 const suffix = 'ENDSAMIGEODATA';
 const conf = {
-    useauth: true,
+    useauth: false,
     port: 4000,
     geopath: 'C:\\AMI\\Data\\geo',
     geocont: 'https://samidatastorageaccount.blob.core.windows.net/samidatastoragecontainergeo',
