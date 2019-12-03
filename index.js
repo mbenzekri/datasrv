@@ -19,6 +19,7 @@ var logger = function (req, res, next) {
 var check = function (req, res, next) {
     if (!config.useauth) return next()
     if (config.validateKey(req.headers['X-sami-token'], req.url)) {
+        console.log(`${(new Date()).toISOString()}: X-sami-token ${req.headers['X-sami-token']} for ${req.url}`);
         next();
     } else {
         console.log(`${(new Date()).toISOString()}: Unauthorized request ${req.url} `);
@@ -38,23 +39,23 @@ app.use(compression({
 
 app.use(logger)
 let state = 'no error thrown !'
-app.use('/', check)
-try {
-    let request = require('request');
-    app.use(config.geourl, function (req, res) {
-        const bloburl = `${config.geocont}${req.path}${config.sastoken}`
+app.use('/geo', check)
+// try {
+let request = require('request');
+app.use('/geo', function (req, res) {
+    const bloburl = `${config.geocont}${req.path}${config.sastoken}`
 
-        console.log(`${(new Date()).toISOString()}: Proxying ${req.url} to ${bloburl}`);
-        res.status(200)
-        req.pipe(request(bloburl)).pipe(res);
+    console.log(`${(new Date()).toISOString()}: Proxying ${req.url} to ${bloburl}`);
+    res.status(200)
+    req.pipe(request(bloburl)).pipe(res);
     })
-} catch (e) {
-    state = `error  thrown !!! <br> ${e.toString()}`
-}
-app.use('/', (request, response) => {
-    response.writeHead(200, { "Content-Type": "text/plain" });
-    response.end(`Hello World! (node ${process.version})  \n ${state} `);
-})
+// } catch (e) {
+//     state = `error  thrown !!! <br> ${e.toString()}`
+// }
+// app.use('/', (request, response) => {
+//     response.writeHead(200, { "Content-Type": "text/plain" });
+//     response.end(`Hello World! (node ${process.version})  \n ${state} `);
+// })
 
 
 http.createServer(app).listen(port)

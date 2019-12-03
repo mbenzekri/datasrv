@@ -10,7 +10,7 @@ const conf = {
     port: 4000,
     geopath: 'C:\\AMI\\Data\\geo',
     geocont: 'https://samidatastorageaccount.blob.core.windows.net/samidatastoragecontainergeo',
-    sastoken : '?sv=2019-02-02&ss=b&srt=co&sp=rwdlac&se=2019-12-03T15:55:59Z&st=2019-12-03T07:55:59Z&spr=https&sig=rbt5UO0iRLzRFGK6NVDgcuEoDPM%2FKjSnFcePZVyyvRo%3D',
+    sastoken : '?sv=2019-02-02&ss=b&srt=co&sp=rl&se=2025-12-04T00:13:00Z&st=2019-12-03T16:13:00Z&spr=https&sig=ham%2FhhyLJKESYhQeM4S4%2Bj4afZQuyKurSuWwCyogARs%3D',
     geourl: '/data/geo',
     docpath: 'C:\\AMI\\Data\\doc',
     docurl: '/data/doc',
