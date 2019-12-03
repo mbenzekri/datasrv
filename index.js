@@ -18,7 +18,7 @@ var logger = function (req, res, next) {
 
 var check = function (req, res, next) {
     if (!config.useauth) return next()
-    if (config.validateKey(req.headers.authorization, req.url)) {
+    if (config.validateKey(req.headers['X-sami-token'], req.url)) {
         next();
     } else {
         console.log(`${(new Date()).toISOString()}: Unauthorized request ${req.url} `);
