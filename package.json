@@ -1,11 +1,16 @@
 {
-    "name": "app-service-hello-world",
-    "description": "Simple Hello World Node.js sample for Azure App Service",
-    "version": "0.0.1",
-    "private": true,
-    "license": "MIT",
-    "author": "Microsoft",
+    "name": "samigeo",
+    "version": "1.0.0",
+    "description": "serveur de fichier statique geojson",
+    "main": "index.js",
+    "dependencies": {},
+    "devDependencies": {
+        "express": "^4.17.1"
+    },
     "scripts": {
-        "start": "node index.js"
-    }
+        "test": "node ./index.js",
+        "start": "node ./index.js"
+    },
+    "author": "Mbz",
+    "license": "ISC"
 }
