@@ -1,19 +1,11 @@
 const http = require('http');
 const config = require('./config')
-
-// const server = http.createServer((request, response) => {
-//      console.log(`${(new Date()).toISOString()} : SAMIDATA REQUEST ${request.url}`);
-//     response.writeHead(200, {"Content-Type": "text/plain"});
-//     response.end("Hello World!");
-// });
-
+const express = require('express')
+const compression = require('compression')
 const port = process.env.PORT || 1337;
-// server.listen(port);
 
 console.log("Server running at http://localhost:%d", port);
 
-const express = require('express')
-// var compression = require('compression')
 
 console.log(`${(new Date()).toISOString()} : SAMIDATA PORT IS  ${port}`);
 
@@ -24,27 +16,29 @@ var logger = function (req, res, next) {
     next()
 };
 
-// var check = function (req, res, next) {
-//     if (!config.useauth) return next()
-//     if (config.validateKey(req.headers.authorization, req.url)) {
-//         next();
-//     } else {
-//         res.sendStatus(401)
-//     }
-// };
+var check = function (req, res, next) {
+    if (!config.useauth) return next()
+    if (config.validateKey(req.headers.authorization, req.url)) {
+        next();
+    } else {
+        console.log(`${(new Date()).toISOString()}: Unauthorized request ${req.url} `);
+        res.sendStatus(401)
+    }
+};
 
-// app.use(compression({
-//     threshold: 1024, // sous cette limite les fichiers ne sont pas compressé
-//     filter: function (req, res) {
-//         var ct = res.get('content-type');
-//         // return `true` for content types that you want to compress,
-//         // `false` otherwise
-//         return true;
-//     }
-// }))
+app.use(compression({
+    threshold: 1024, // sous cette limite les fichiers ne sont pas compressé
+    filter: function (req, res) {
+        var ct = res.get('content-type');
+        // return `true` for content types that you want to compress,
+        // `false` otherwise
+        return true;
+    }
+}))
+
 app.use(logger)
 let state = 'no error thrown !'
-//app.use('/', check)
+app.use('/', check)
 try {
     let request = require('request');
     app.use(config.geourl, function (req, res) {
@@ -53,7 +47,7 @@ try {
         console.log(`${(new Date()).toISOString()}: Proxying ${req.url} to ${bloburl}`);
         req.pipe(request(bloburl)).pipe(res);
     })
-} catch(e) {
+} catch (e) {
     state = `error  thrown !!! <br> ${e.toString()}`
 }
 app.use('/', (request, response) => {
