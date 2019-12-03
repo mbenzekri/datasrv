@@ -12,25 +12,18 @@ const port = process.env.PORT || 1337;
 console.log("Server running at http://localhost:%d", port);
 
 const express = require('express')
-// const cors = require('cors')
 // const config = require('./config')
-// const https = require('https')
 // const http = require('http')
-// const fs = require('fs')
-// const cluster = require('cluster')
 // var compression = require('compression')
-// request = require('request');
 
-// var workercount = 2 * require('os').cpus().length;
-// const port = process.env.PORT || config.port
-// console.log(`================> PORT IS : ${port}`)
+console.log(`${(new Date()).toISOString()} : SAMIDATA PORT IS  ${port}`);
 
 const app = express()
 
-// var logger = function (req, res, next) {
-//     console.log(`${(new Date()).toISOString()}: serving ${req.url}`)
-//     next()
-// };
+var logger = function (req, res, next) {
+    console.log(`${(new Date()).toISOString()} : SAMIDATA REQUEST ${req.url}`);
+    next()
+};
 
 // var check = function (req, res, next) {
 //     if (!config.useauth) return next()
@@ -50,27 +43,22 @@ const app = express()
 //         return true;
 //     }
 // }))
-// app.use(cors())
-// app.use(logger)
+app.use(logger)
 // app.use('/', check)
 app.use('/', (request, response) => {
-     console.log(`${(new Date()).toISOString()} : SAMIDATA REQUEST ${request.url}`);
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.end("Hello World!");
 })
 
+
+// request = require('request');
 // app.use(config.geourl, function (req, res) {
 //     const bloburl = `${config.geocont}${req.path}${config.sastoken}`
 
 //     console.log(`${(new Date()).toISOString()}: Proxying ${req.url} to ${bloburl}`);
 //     req.pipe(request(bloburl)).pipe(res);
 // })
-// //app.use(config.docurl, express.static(config.docpath));
-// console.log(`${(new Date()).toISOString()}: server running!`);
 
-// // https.createServer({
-// //     key: fs.readFileSync('server.key'),
-// //     cert: fs.readFileSync('server.cert')
-// // }, app).listen(port);
 
 http.createServer(app).listen(port)
+console.log(`${(new Date()).toISOString()}: SAMIDATA SERVER running!`);
