@@ -1,4 +1,5 @@
 const http = require('http');
+const config = require('./config')
 
 // const server = http.createServer((request, response) => {
 //      console.log(`${(new Date()).toISOString()} : SAMIDATA REQUEST ${request.url}`);
@@ -12,8 +13,6 @@ const port = process.env.PORT || 1337;
 console.log("Server running at http://localhost:%d", port);
 
 const express = require('express')
-// const config = require('./config')
-// const http = require('http')
 // var compression = require('compression')
 
 console.log(`${(new Date()).toISOString()} : SAMIDATA PORT IS  ${port}`);
@@ -44,20 +43,22 @@ var logger = function (req, res, next) {
 //     }
 // }))
 app.use(logger)
-// app.use('/', check)
+
+//app.use('/', check)
+let request = require('request');
+app.use(config.geourl, function (req, res) {
+    const bloburl = `${config.geocont}${req.path}${config.sastoken}`
+
+    console.log(`${(new Date()).toISOString()}: Proxying ${req.url} to ${bloburl}`);
+    req.pipe(request(bloburl)).pipe(res);
+})
+
 app.use('/', (request, response) => {
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.end("Hello World!");
 })
 
 
-// request = require('request');
-// app.use(config.geourl, function (req, res) {
-//     const bloburl = `${config.geocont}${req.path}${config.sastoken}`
-
-//     console.log(`${(new Date()).toISOString()}: Proxying ${req.url} to ${bloburl}`);
-//     req.pipe(request(bloburl)).pipe(res);
-// })
 
 
 http.createServer(app).listen(port)
