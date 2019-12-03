@@ -1,17 +1,17 @@
 const http = require('http');
 
-const server = http.createServer((request, response) => {
-     console.log(`${(new Date()).toISOString()} : SAMIDATA REQUEST ${request.url}`);
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Hello World!");
-});
+// const server = http.createServer((request, response) => {
+//      console.log(`${(new Date()).toISOString()} : SAMIDATA REQUEST ${request.url}`);
+//     response.writeHead(200, {"Content-Type": "text/plain"});
+//     response.end("Hello World!");
+// });
 
 const port = process.env.PORT || 1337;
-server.listen(port);
+// server.listen(port);
 
 console.log("Server running at http://localhost:%d", port);
 
-// const express = require('express')
+const express = require('express')
 // const cors = require('cors')
 // const config = require('./config')
 // const https = require('https')
@@ -25,7 +25,7 @@ console.log("Server running at http://localhost:%d", port);
 // const port = process.env.PORT || config.port
 // console.log(`================> PORT IS : ${port}`)
 
-// const app = express()
+const app = express()
 
 // var logger = function (req, res, next) {
 //     console.log(`${(new Date()).toISOString()}: serving ${req.url}`)
@@ -53,6 +53,12 @@ console.log("Server running at http://localhost:%d", port);
 // app.use(cors())
 // app.use(logger)
 // app.use('/', check)
+app.use('/', (request, response) => {
+     console.log(`${(new Date()).toISOString()} : SAMIDATA REQUEST ${request.url}`);
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.end("Hello World!");
+})
+
 // app.use(config.geourl, function (req, res) {
 //     const bloburl = `${config.geocont}${req.path}${config.sastoken}`
 
@@ -67,4 +73,4 @@ console.log("Server running at http://localhost:%d", port);
 // //     cert: fs.readFileSync('server.cert')
 // // }, app).listen(port);
 
-// http.createServer(app).listen(port)
+http.createServer(app).listen(port)
