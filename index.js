@@ -43,22 +43,23 @@ var logger = function (req, res, next) {
 //     }
 // }))
 app.use(logger)
-
+let state = 'no error thrown !'
 //app.use('/', check)
-// let request = require('request');
-// app.use(config.geourl, function (req, res) {
-//     const bloburl = `${config.geocont}${req.path}${config.sastoken}`
+try {
+    let request = require('request');
+    app.use(config.geourl, function (req, res) {
+        const bloburl = `${config.geocont}${req.path}${config.sastoken}`
 
-//     console.log(`${(new Date()).toISOString()}: Proxying ${req.url} to ${bloburl}`);
-//     req.pipe(request(bloburl)).pipe(res);
-// })
-
+        console.log(`${(new Date()).toISOString()}: Proxying ${req.url} to ${bloburl}`);
+        req.pipe(request(bloburl)).pipe(res);
+    })
+} catch(e) {
+    state = `error  thrown !!! <br> ${e.toString()}`
+}
 app.use('/', (request, response) => {
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end(`Hello World! (node ${process.version}) `);
+    response.writeHead(200, { "Content-Type": "text/plain" });
+    response.end(`Hello World! (node ${process.version})  \n ${state} `);
 })
-
-
 
 
 http.createServer(app).listen(port)
